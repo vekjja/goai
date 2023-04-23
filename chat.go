@@ -2,11 +2,9 @@ package goai
 
 import (
 	"fmt"
-
-	"github.com/spf13/viper"
 )
 
-func (goai GoAi) ChatCompletion(messages []Message) (string, error) {
+func (goai Client) ChatCompletion(messages []Message) (string, error) {
 	oaiResponse := ChatCompletionResponse{}
 	oaiRequest := ChatCompletionRequest{
 		N:                1,
@@ -19,10 +17,10 @@ func (goai GoAi) ChatCompletion(messages []Message) (string, error) {
 		PresencePenalty:  goai.PresencePenalty,
 		FrequencyPenalty: goai.FrequencyPenalty,
 	}
-	return oaiResponse.Choices[0].Message.Content, goai.PostJson(oaiRequest, &oaiResponse, viper.GetString("openAI_endpoint")+"chat/completions")
+	return oaiResponse.Choices[0].Message.Content, goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"chat/completions")
 }
 
-func (goai GoAi) TextCompletion(prompt string) (ChatResponse, error) {
+func (goai Client) TextCompletion(prompt string) (ChatResponse, error) {
 	oaiResponse := ChatResponse{}
 	oaiRequest := &ChatRequest{
 		Prompt:           prompt,
@@ -37,5 +35,5 @@ func (goai GoAi) TextCompletion(prompt string) (ChatResponse, error) {
 	if goai.Verbose {
 		fmt.Println(oaiRequest)
 	}
-	return oaiResponse, goai.PostJson(oaiRequest, &oaiResponse, viper.GetString("openAI_endpoint")+"completions")
+	return oaiResponse, goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"completions")
 }

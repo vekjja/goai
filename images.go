@@ -10,9 +10,45 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+
+	"github.com/spf13/viper"
 )
 
-func (goai GoAi) UploadImage(requestJson, responseJson interface{}, endpoint, filePath string) error {
+func (goai Client) ImageGen(prompt, imageFile string, n int) ImageResponse {
+	var oaiRequest interface{}
+	oaiResponse := ImageResponse{}
+
+	// Check if we are editing an image or generating a new one
+	if imageFile != "" {
+
+		// Create the JSON Request Body
+		oaiRequest = &ImageEditRequest{
+			N:              n,
+			ResponseFormat: "url",
+			Prompt:         prompt,
+			User:           goai.User,
+			Size:           viper.GetString("openAI_image_size"),
+		}
+		goai.UploadImage(oaiRequest, &oaiResponse, goai.Endpoint+"images/edits", imageFile)
+
+	} else { // Generate a new image
+
+		oaiRequest = &ImageRequest{
+			N:              n,
+			ResponseFormat: "url",
+			Prompt:         prompt,
+			User:           goai.User,
+			Size:           viper.GetString("openAI_image_size"),
+		}
+		goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"images/generations")
+	}
+	if goai.Verbose {
+		fmt.Println(oaiRequest)
+	}
+	return oaiResponse
+}
+
+func (goai Client) UploadImage(requestJson, responseJson interface{}, endpoint, filePath string) error {
 
 	// Get the absolute path of the file
 	fullPath, err := filepath.Abs(filePath)

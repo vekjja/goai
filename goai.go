@@ -1,19 +1,19 @@
 package goai
 
 import (
-	"errors"
 	"hash/fnv"
 	"net/http"
 	"strconv"
 	"time"
 )
 
-type GoAi struct {
+type Client struct {
 	Endpoint         string
 	API_KEY          string
 	Verbose          bool
 	User             string
 	httpClient       *http.Client
+	ImageSize        string
 	TopP             float64
 	ChatModel        string
 	TextModel        string
@@ -23,18 +23,14 @@ type GoAi struct {
 	PresencePenalty  float64
 }
 
-func New(apiKey string, verbose bool) (*GoAi, error) {
-
-	if apiKey == "" {
-		return nil, errors.New("API Key is required")
-	}
+func NewClient(apiKey string, verbose bool) *Client {
 
 	// Create a unique user for OpenAI
 	h := fnv.New32a()
 	h.Write([]byte(apiKey))
 	user := "gopenai-" + strconv.Itoa(int(h.Sum32()))
 
-	return &GoAi{
+	return &Client{
 		API_KEY:  apiKey,
 		Verbose:  verbose,
 		Endpoint: "https://api.openai.com/v1/",
@@ -42,6 +38,7 @@ func New(apiKey string, verbose bool) (*GoAi, error) {
 		httpClient: &http.Client{
 			Timeout: time.Second * 60,
 		},
+		ImageSize:        "1024x1024",
 		TopP:             0.9,
 		ChatModel:        "gpt-3.5-turbo",
 		TextModel:        "text-davinci-003",
@@ -49,5 +46,5 @@ func New(apiKey string, verbose bool) (*GoAi, error) {
 		Temperature:      0.9,
 		FrequencyPenalty: 0.03,
 		PresencePenalty:  0.6,
-	}, nil
+	}
 }

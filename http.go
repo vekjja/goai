@@ -19,7 +19,7 @@ func httpCatchErr(resp *http.Response, jsonString []byte) error {
 	return nil
 }
 
-func (goai GoAi) MakeRequest(request *http.Request, responseJson interface{}) error {
+func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) error {
 
 	// Make the HTTP Request
 	resp, err := goai.httpClient.Do(request)
@@ -58,7 +58,7 @@ func (goai GoAi) MakeRequest(request *http.Request, responseJson interface{}) er
 	return nil
 }
 
-func (goai GoAi) PostJson(requestJson, responseJson interface{}, endpoint string) error {
+func (goai Client) PostJson(requestJson, responseJson interface{}, endpoint string) error {
 	// Marshal the JSON Request Body
 	requestBodyJson, err := json.Marshal(requestJson)
 	if err != nil {
