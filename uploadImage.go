@@ -46,7 +46,7 @@ func (goai GOpenAI) UploadImage(requestJson, responseJson interface{}, endpoint,
 		return err
 	}
 
-	oaiImageEditJson := requestJson.(*OPENAI_ImageEditRequest)
+	oaiImageEditJson := requestJson.(*ImageEditRequest)
 
 	// Add the JSON payload to the request
 	part, err = writer.CreateFormField("prompt")

@@ -1,6 +1,6 @@
 package gopenai
 
-type OPENAI_ChatRequest struct {
+type ChatRequest struct {
 	Prompt           string   `json:"prompt"`
 	MaxTokens        int      `json:"max_tokens"`
 	Model            string   `json:"model"`
@@ -12,7 +12,7 @@ type OPENAI_ChatRequest struct {
 	User             string   `json:"user"`
 }
 
-type OPENAI_ChatResponse struct {
+type ChatResponse struct {
 	ID      string `json:"id"`
 	Object  string `json:"object"`
 	Created int64  `json:"created"`
@@ -30,7 +30,7 @@ type OPENAI_ChatResponse struct {
 	} `json:"usage"`
 }
 
-type OPENAI_ImageRequest struct {
+type ImageRequest struct {
 	Prompt         string `json:"prompt"`
 	N              int    `json:"n"`
 	Size           string `json:"size"`
@@ -38,7 +38,7 @@ type OPENAI_ImageRequest struct {
 	User           string `json:"user"`
 }
 
-type OPENAI_ImageEditRequest struct {
+type ImageEditRequest struct {
 	Prompt         string `json:"prompt"`
 	N              int    `json:"n"`
 	Size           string `json:"size"`
@@ -48,14 +48,14 @@ type OPENAI_ImageEditRequest struct {
 	Mask           string `json:"mask"`
 }
 
-type OPENAI_ImageResponse struct {
+type ImageResponse struct {
 	Created int64 `json:"created"`
 	Data    []struct {
 		URL string `json:"url"`
 	} `json:"data"`
 }
 
-type OPENAI_ErrorResponse struct {
+type ErrorResponse struct {
 	Error struct {
 		Message string `json:"message"`
 		Type    string `json:"type"`
@@ -64,35 +64,35 @@ type OPENAI_ErrorResponse struct {
 	} `json:"error"`
 }
 
-type OPENAI_ChatCompletionResponse struct {
-	ID      string          `json:"id"`
-	Object  string          `json:"object"`
-	Created int             `json:"created"`
-	Choices []OPENAI_Choice `json:"choices"`
-	Usage   map[string]int  `json:"usage"`
+type ChatCompletionResponse struct {
+	ID      string         `json:"id"`
+	Object  string         `json:"object"`
+	Created int            `json:"created"`
+	Choices []Choice       `json:"choices"`
+	Usage   map[string]int `json:"usage"`
 }
 
-type OPENAI_Choice struct {
-	Index        int            `json:"index"`
-	Message      OPENAI_Message `json:"message"`
-	FinishReason string         `json:"finish_reason"`
+type Choice struct {
+	Index        int     `json:"index"`
+	Message      Message `json:"message"`
+	FinishReason string  `json:"finish_reason"`
 }
 
-type OPENAI_Message struct {
+type Message struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
 }
 
-type OPENAI_ChatCompletionRequest struct {
-	Model            string           `json:"model"`
-	Messages         []OPENAI_Message `json:"messages"`
-	MaxTokens        int              `json:"max_tokens"`
-	Temperature      float64          `json:"temperature"`
-	TopP             float64          `json:"top_p"`
-	N                int              `json:"n"`
-	Stream           bool             `json:"stream"`
-	PresencePenalty  float64          `json:"presence_penalty"`
-	FrequencyPenalty float64          `json:"frequency_penalty"`
-	Stop             []string         `json:"stop"`
-	User             string           `json:"user"`
+type ChatCompletionRequest struct {
+	Model            string    `json:"model"`
+	Messages         []Message `json:"messages"`
+	MaxTokens        int       `json:"max_tokens"`
+	Temperature      float64   `json:"temperature"`
+	TopP             float64   `json:"top_p"`
+	N                int       `json:"n"`
+	Stream           bool      `json:"stream"`
+	PresencePenalty  float64   `json:"presence_penalty"`
+	FrequencyPenalty float64   `json:"frequency_penalty"`
+	Stop             []string  `json:"stop"`
+	User             string    `json:"user"`
 }
