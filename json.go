@@ -1,4 +1,4 @@
-package gopenai
+package goai
 
 type ChatRequest struct {
 	Prompt           string   `json:"prompt"`

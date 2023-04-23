@@ -1,4 +1,4 @@
-package gopenai
+package goai
 
 import (
 	"errors"
@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-type GOpenAI struct {
+type GoAi struct {
 	Endpoint         string
 	API_KEY          string
 	Verbose          bool
@@ -23,7 +23,7 @@ type GOpenAI struct {
 	PresencePenalty  float64
 }
 
-func NewGOpenAI(apiKey string, verbose bool) (*GOpenAI, error) {
+func NewGOpenAI(apiKey string, verbose bool) (*GoAi, error) {
 
 	if apiKey == "" {
 		return nil, errors.New("API Key is required")
@@ -34,7 +34,7 @@ func NewGOpenAI(apiKey string, verbose bool) (*GOpenAI, error) {
 	h.Write([]byte(apiKey))
 	user := "gopenai-" + strconv.Itoa(int(h.Sum32()))
 
-	return &GOpenAI{
+	return &GoAi{
 		API_KEY:  apiKey,
 		Verbose:  verbose,
 		Endpoint: "https://api.openai.com/v1/",

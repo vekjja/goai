@@ -1,4 +1,4 @@
-package gopenai
+package goai
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-func (goai GOpenAI) UploadImage(requestJson, responseJson interface{}, endpoint, filePath string) error {
+func (goai GoAi) UploadImage(requestJson, responseJson interface{}, endpoint, filePath string) error {
 
 	// Get the absolute path of the file
 	fullPath, err := filepath.Abs(filePath)

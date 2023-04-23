@@ -1,4 +1,4 @@
-module github.com/seemywingz/gopenai
+module github.com/seemywingz/goai
 
 go 1.20
 
