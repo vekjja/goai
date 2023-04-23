@@ -1,12 +1,3 @@
-# GOAI
-Go [OpenAI API](https://platform.openai.com/docs/api-reference) Library
-
-
-
-`go get github.com/seemywingz/goai`
-
-```golang
-// main.go
 package main
 
 import (
@@ -21,6 +12,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	println(oaiRes.Choices[0].Text)
+	for _, choice := range oaiRes.Choices {
+		println(choice.Text)
+	}
 }
-```
