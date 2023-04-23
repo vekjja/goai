@@ -23,7 +23,7 @@ type GoAi struct {
 	PresencePenalty  float64
 }
 
-func NewGOpenAI(apiKey string, verbose bool) (*GoAi, error) {
+func New(apiKey string, verbose bool) (*GoAi, error) {
 
 	if apiKey == "" {
 		return nil, errors.New("API Key is required")
