@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func (goai Client) ChatCompletion(messages []Message) (string, error) {
+func (goai Client) ChatCompletion(messages []Message) (ChatCompletionResponse, error) {
 	oaiResponse := ChatCompletionResponse{}
 	oaiRequest := ChatCompletionRequest{
 		N:                1,
@@ -17,7 +17,7 @@ func (goai Client) ChatCompletion(messages []Message) (string, error) {
 		PresencePenalty:  goai.PresencePenalty,
 		FrequencyPenalty: goai.FrequencyPenalty,
 	}
-	return oaiResponse.Choices[0].Message.Content, goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"chat/completions")
+	return oaiResponse, goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"chat/completions")
 }
 
 func (goai Client) TextCompletion(prompt string) (ChatResponse, error) {
