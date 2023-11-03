@@ -22,7 +22,7 @@ func httpCatchErr(resp *http.Response, jsonString []byte) error {
 func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) error {
 
 	// Make the HTTP Request
-	resp, err := goai.httpClient.Do(request)
+	resp, err := goai.HTTPClient.Do(request)
 	if err != nil {
 		return err
 	}

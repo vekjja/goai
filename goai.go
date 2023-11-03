@@ -12,7 +12,7 @@ type Client struct {
 	API_KEY          string
 	Verbose          bool
 	User             string
-	httpClient       *http.Client
+	HTTPClient       *http.Client
 	ImageSize        string
 	TopP             float64
 	ChatModel        string
@@ -23,19 +23,20 @@ type Client struct {
 	PresencePenalty  float64
 }
 
-func NewClient(apiKey string, verbose bool) *Client {
-
-	// Create a unique user for OpenAI
-	h := fnv.New32a()
+// Create a unique user for OpenAI to track  
+func HashAPIKey(apiKey string) string {
+	h := fnv.New64a()
 	h.Write([]byte(apiKey))
-	user := "gopenai-" + strconv.Itoa(int(h.Sum32()))
+	return strconv.FormatUint(h.Sum64(), 10)
+}
 
+func NewClient(apiKey string, verbose bool) *Client {
 	return &Client{
 		API_KEY:  apiKey,
 		Verbose:  verbose,
 		Endpoint: "https://api.openai.com/v1/",
-		User:     user,
-		httpClient: &http.Client{
+		User:     HashAPIKey(apiKey),
+		HTTPClient: &http.Client{
 			Timeout: time.Second * 60,
 		},
 		ImageSize:        "1024x1024",

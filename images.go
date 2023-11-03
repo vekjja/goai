@@ -131,7 +131,7 @@ func (goai Client) UploadImage(requestJson, responseJson interface{}, endpoint, 
 
 	// Send the request
 	fmt.Println("⏳ Uploading File: " + fullPath)
-	resp, err := goai.httpClient.Do(req)
+	resp, err := goai.HTTPClient.Do(req)
 	if err != nil {
 		return err
 	}
