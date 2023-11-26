@@ -36,6 +36,7 @@ type ImageRequest struct {
 	Size           string `json:"size"`
 	ResponseFormat string `json:"response_format"`
 	User           string `json:"user"`
+	Model          string `json:"model"`
 }
 
 type ImageEditRequest struct {

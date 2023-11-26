@@ -39,6 +39,7 @@ func (goai Client) ImageGen(prompt, imageFile string, n int) ImageResponse {
 			Prompt:         prompt,
 			User:           goai.User,
 			Size:           viper.GetString("openAI_image_size"),
+			Model:          viper.GetString("openAI_image_model"),
 		}
 		goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"images/generations")
 	}

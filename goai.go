@@ -17,20 +17,21 @@ type Client struct {
 	TopP             float64
 	ChatModel        string
 	TextModel        string
+	ImageModel       string
 	MaxTokens        int
 	Temperature      float64
 	FrequencyPenalty float64
 	PresencePenalty  float64
 }
 
-// Create a unique user for OpenAI to track  
+// Create a unique user for OpenAI to track
 func HashAPIKey(apiKey string) string {
 	h := fnv.New64a()
 	h.Write([]byte(apiKey))
 	return strconv.FormatUint(h.Sum64(), 10)
 }
 
-func NewClient(apiKey string, verbose bool) *Client {
+func DefaultClient(apiKey string, verbose bool) *Client {
 	return &Client{
 		API_KEY:  apiKey,
 		Verbose:  verbose,
