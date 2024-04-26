@@ -19,18 +19,18 @@ func httpCatchErr(resp *http.Response, jsonString []byte) error {
 	return nil
 }
 
-func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) error {
+func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) ([]byte, error) {
 
 	// Make the HTTP Request
 	resp, err := goai.HTTPClient.Do(request)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Read the JSON Response Body
 	jsonString, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Check for HTTP Errors
@@ -43,35 +43,39 @@ func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) 
 		fmt.Println("🌐 HTTP Response", b)
 	}
 
+	// Close the HTTP Response Body
+	defer resp.Body.Close()
+
+	if responseJson == nil {
+		return jsonString, nil
+	}
+
 	// Unmarshal the JSON Response Body into provided responseJson
 	err = json.Unmarshal([]byte(jsonString), &responseJson)
 	if err != nil {
-		return err
+		return nil, errors.New("Error Unmarshalling JSON Response: " + err.Error())
 	}
 	if goai.Verbose {
 		// trace()
 		fmt.Println("🌐 HTTP Response String", string(jsonString))
 		fmt.Println("🌐 HTTP Response JSON", responseJson)
 	}
-	// Close the HTTP Response Body
-	defer resp.Body.Close()
-	return nil
+	return jsonString, nil
 }
 
-func (goai Client) PostJson(requestJson, responseJson interface{}, endpoint string) error {
+func (goai Client) PostJson(requestJson, responseJson interface{}, endpoint string) ([]byte, error) {
 	// Marshal the JSON Request Body
 	requestBodyJson, err := json.Marshal(requestJson)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if goai.Verbose {
-		// trace()
 		fmt.Println(string(requestBodyJson))
 	}
 	// Format HTTP Response and Set Headers
 	req, err := http.NewRequest("POST", endpoint, bytes.NewBuffer(requestBodyJson))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+goai.API_KEY)

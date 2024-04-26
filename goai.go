@@ -18,6 +18,9 @@ type Client struct {
 	ChatModel        string
 	ImageModel       string
 	TTSModel         string
+	Voice            string
+	Speed            float64
+	ResponseFormat   string
 	MaxTokens        int
 	Temperature      float64
 	FrequencyPenalty float64
@@ -44,6 +47,9 @@ func DefaultClient(apiKey string, verbose bool) *Client {
 		TopP:             0.9,
 		ChatModel:        "gpt-4",
 		TTSModel:         "tts-1",
+		Voice:            "onyx",
+		Speed:            1,
+		ResponseFormat:   "mp3",
 		MaxTokens:        999,
 		Temperature:      0.9,
 		FrequencyPenalty: 0.03,

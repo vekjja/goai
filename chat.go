@@ -3,8 +3,8 @@ package goai
 import ()
 
 func (goai Client) ChatCompletion(messages []Message) (ChatCompletionResponse, error) {
-	oaiResponse := ChatCompletionResponse{}
-	oaiRequest := ChatCompletionRequest{
+	res := ChatCompletionResponse{}
+	req := ChatCompletionRequest{
 		N:                1,
 		Messages:         messages,
 		User:             goai.User,
@@ -15,5 +15,6 @@ func (goai Client) ChatCompletion(messages []Message) (ChatCompletionResponse, e
 		PresencePenalty:  goai.PresencePenalty,
 		FrequencyPenalty: goai.FrequencyPenalty,
 	}
-	return oaiResponse, goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"chat/completions")
+	_, err := goai.PostJson(req, &res, goai.Endpoint+"chat/completions")
+	return res, err
 }
