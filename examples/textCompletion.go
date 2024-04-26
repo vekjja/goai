@@ -1,18 +1,22 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/seemywingz/goai"
 )
 
+var messages = []goai.Message{{
+	Role:    "system",
+	Content: "You are a helpful assistant.",
+}}
+
 func main() {
-	oai := goai.NewClient(os.Getenv("OPENAI_API_KEY"), false)
-	oaiRes, err := oai.TextCompletion("This is a test.")
+	ai := goai.DefaultClient(os.Getenv("OPENAI_API_KEY"), false)
+	oaiRes, err := ai.ChatCompletion(messages)
 	if err != nil {
 		panic(err)
 	}
-	for _, choice := range oaiRes.Choices {
-		println(choice.Text)
-	}
+	fmt.Println(oaiRes.Choices[0].Message.Content)
 }

@@ -1,8 +1,6 @@
 package goai
 
-import (
-	"fmt"
-)
+import ()
 
 func (goai Client) ChatCompletion(messages []Message) (ChatCompletionResponse, error) {
 	oaiResponse := ChatCompletionResponse{}
@@ -18,22 +16,4 @@ func (goai Client) ChatCompletion(messages []Message) (ChatCompletionResponse, e
 		FrequencyPenalty: goai.FrequencyPenalty,
 	}
 	return oaiResponse, goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"chat/completions")
-}
-
-func (goai Client) TextCompletion(prompt string) (ChatResponse, error) {
-	oaiResponse := ChatResponse{}
-	oaiRequest := &ChatRequest{
-		Prompt:           prompt,
-		User:             goai.User,
-		TopP:             goai.TopP,
-		Model:            goai.TextModel,
-		MaxTokens:        goai.MaxTokens,
-		Temperature:      goai.Temperature,
-		PresencePenalty:  goai.PresencePenalty,
-		FrequencyPenalty: goai.FrequencyPenalty,
-	}
-	if goai.Verbose {
-		fmt.Println(oaiRequest)
-	}
-	return oaiResponse, goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"completions")
 }

@@ -16,8 +16,8 @@ type Client struct {
 	ImageSize        string
 	TopP             float64
 	ChatModel        string
-	TextModel        string
 	ImageModel       string
+	TTSModel         string
 	MaxTokens        int
 	Temperature      float64
 	FrequencyPenalty float64
@@ -42,8 +42,8 @@ func DefaultClient(apiKey string, verbose bool) *Client {
 		},
 		ImageSize:        "1024x1024",
 		TopP:             0.9,
-		ChatModel:        "gpt-3.5-turbo",
-		TextModel:        "text-davinci-003",
+		ChatModel:        "gpt-4",
+		TTSModel:         "tts-1",
 		MaxTokens:        999,
 		Temperature:      0.9,
 		FrequencyPenalty: 0.03,
