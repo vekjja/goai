@@ -1,7 +1,5 @@
 package goai
 
-import ()
-
 func (goai Client) ChatCompletion(messages []Message) (ChatCompletionResponse, error) {
 	res := ChatCompletionResponse{}
 	req := ChatCompletionRequest{
