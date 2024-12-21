@@ -138,13 +138,13 @@ func (goai Client) UploadImage(requestJson, responseJson interface{}, endpoint, 
 	}
 
 	// Read the JSON Response Body
-	jsonString, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
+	// jsonString, err := io.ReadAll(resp.Body)
+	// if err != nil {
+	// 	return err
+	// }
 
 	// Check for API Errors
-	err = httpCatchErr(resp, jsonString)
+	jsonString, err := httpCatchErr(resp)
 	if err != nil {
 		return err
 	}

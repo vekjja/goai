@@ -11,12 +11,18 @@ import (
 	"strconv"
 )
 
-func httpCatchErr(resp *http.Response, jsonString []byte) error {
+func httpCatchErr(resp *http.Response) ([]byte, error) {
+	resBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
 	// Check for HTTP Response Errors
 	if resp.StatusCode != 200 {
-		return errors.New("API Error: " + strconv.Itoa(resp.StatusCode) + "\n" + string(jsonString))
+		errJson := ErrorResponse{}
+		err = json.Unmarshal(resBody, &errJson)
+		return nil, errors.New("API Error: " + strconv.Itoa(resp.StatusCode) + "\n" + errJson.Error.Message)
 	}
-	return nil
+	return resBody, nil
 }
 
 func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) ([]byte, error) {
@@ -27,14 +33,12 @@ func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) 
 		return nil, err
 	}
 
-	// Read the JSON Response Body
-	jsonString, err := io.ReadAll(resp.Body)
+	// Check for HTTP Errors
+	jsonString, err := httpCatchErr(resp)
 	if err != nil {
 		return nil, err
 	}
 
-	// Check for HTTP Errors
-	httpCatchErr(resp, jsonString)
 	if goai.Verbose {
 		b, err := io.ReadAll(resp.Body)
 		if err != nil {
