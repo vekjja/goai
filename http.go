@@ -29,9 +29,9 @@ func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) 
 	if goai.Verbose > 0 {
 		dump, err := httputil.DumpRequestOut(request, true)
 		if err != nil {
-			fmt.Printf("⚠️ Error dumping request: %v\n", err)
+			fmt.Printf("⚠️ Error Dumping Request: %v\n", err)
 		} else {
-			fmt.Printf("🌈 GoAI Request:\n%s\n\n", string(dump))
+			fmt.Printf("🌈 HTTP Request:\n%s\n\n", string(dump))
 		}
 	}
 	// Make the HTTP Request
@@ -51,7 +51,7 @@ func (goai Client) MakeRequest(request *http.Request, responseJson interface{}) 
 		if err != nil {
 			log.Fatalln(err)
 		}
-		fmt.Println("🌐 HTTP Response", b)
+		fmt.Println("🌈 HTTP Response", b)
 	}
 
 	// Close the HTTP Response Body
