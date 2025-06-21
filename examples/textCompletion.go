@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/seemywingz/goai"
+	"github.com/vekjja/goai"
 )
 
 var messages = []goai.Message{{
