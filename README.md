@@ -3,7 +3,7 @@ Go [OpenAI API](https://platform.openai.com/docs/api-reference) Library
 
 
 
-`go get github.com/seemywingz/goai`
+`go get github.com/vekjja/goai`
 
 ```golang
 // main.go
@@ -12,7 +12,7 @@ package main
 import (
 	"os"
 
-	"github.com/seemywingz/goai"
+	"github.com/vekjja/goai"
 )
 
 func main() {
