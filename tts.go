@@ -1,6 +1,13 @@
 package goai
 
-import ()
+// TTSRequest represents the request structure for OpenAI's text-to-speech API.
+type TTSRequest struct {
+	Model          string  `json:"model"`
+	Input          string  `json:"input"`
+	Voice          string  `json:"voice"`
+	ResponseFormat string  `json:"response_format"`
+	Speed          float64 `json:"speed"`
+}
 
 func (goai Client) TTS(input string) ([]byte, error) {
 	req := TTSRequest{

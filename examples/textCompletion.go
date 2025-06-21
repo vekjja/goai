@@ -13,7 +13,7 @@ var messages = []goai.Message{{
 }}
 
 func main() {
-	ai := goai.DefaultClient(os.Getenv("OPENAI_API_KEY"), false)
+	ai := goai.DefaultClient(os.Getenv("OPENAI_API_KEY"), 0)
 	oaiRes, err := ai.ChatCompletion(messages)
 	if err != nil {
 		panic(err)

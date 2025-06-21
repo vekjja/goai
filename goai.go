@@ -10,7 +10,7 @@ import (
 type Client struct {
 	Endpoint         string
 	API_KEY          string
-	Verbose          bool
+	Verbose          int
 	User             string
 	HTTPClient       *http.Client
 	ImageSize        string
@@ -34,7 +34,7 @@ func HashAPIKey(apiKey string) string {
 	return strconv.FormatUint(h.Sum64(), 10)
 }
 
-func DefaultClient(apiKey string, verbose bool) *Client {
+func DefaultClient(apiKey string, verbose int) *Client {
 	return &Client{
 		API_KEY:  apiKey,
 		Verbose:  verbose,
