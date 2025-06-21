@@ -10,11 +10,9 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-
-	"github.com/spf13/viper"
 )
 
-func (goai Client) ImageGen(prompt, imageFile string, n int) ImageResponse {
+func (goai Client) ImageGen(prompt, imageModel string, imageFile string, imageSize string, n int) ImageResponse {
 	var oaiRequest interface{}
 	oaiResponse := ImageResponse{}
 
@@ -27,7 +25,7 @@ func (goai Client) ImageGen(prompt, imageFile string, n int) ImageResponse {
 			ResponseFormat: "url",
 			Prompt:         prompt,
 			User:           goai.User,
-			Size:           viper.GetString("openAI_image_size"),
+			Size:           imageSize,
 		}
 		goai.UploadImage(oaiRequest, &oaiResponse, goai.Endpoint+"images/edits", imageFile)
 
@@ -38,8 +36,8 @@ func (goai Client) ImageGen(prompt, imageFile string, n int) ImageResponse {
 			ResponseFormat: "url",
 			Prompt:         prompt,
 			User:           goai.User,
-			Size:           viper.GetString("openAI_image_size"),
-			Model:          viper.GetString("openAI_image_model"),
+			Size:           imageSize,
+			Model:          imageModel,
 		}
 		goai.PostJson(oaiRequest, &oaiResponse, goai.Endpoint+"images/generations")
 	}
